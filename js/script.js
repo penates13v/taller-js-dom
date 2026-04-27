@@ -1,50 +1,51 @@
-// Seleccionamos por ID y por Clase [cite: 28]
+// --- PARTE 2: SELECCIÓN ---
 const titulo = document.getElementById("titulo");
-const descripcion = document.querySelector(".clase"); // También podrías usar .descripcion [cite: 28]
+const descripcion = document.querySelector(".descripcion");
+console.log(titulo, descripcion); // Verificación en consola [cite: 34]
 
-console.log(titulo); 
-console.log(descripcion);
-const boton = document.getElementById("btnModificar");
+// --- PARTE 3 Y 4: MODIFICAR TÍTULO ---
+const btnModificar = document.getElementById("btnModificar");
 
-boton.addEventListener("click", function() { 
-    // Cambio de texto [cite: 37, 39]
-    titulo.textContent = "¡Texto Cambiado!"; 
+btnModificar.addEventListener("click", function() {
+    titulo.textContent = "¡Título Actualizado!"; // Cambia texto [cite: 39]
+    titulo.style.color = "blue";                 // Cambia color [cite: 45]
+    titulo.style.fontSize = "30px";             // Cambia tamaño [cite: 46]
+    titulo.style.backgroundColor = "yellow";     // Cambia fondo [cite: 47]
+});
 
-    // Cambio de estilos [cite: 42, 44]
-    titulo.style.color = "blue"; 
-    titulo.style.fontSize = "30px"; 
-    titulo.style.backgroundColor = "yellow"; // Cambia el fondo [cite: 47]
-}); 
-const input = document.getElementById("inputUsuario");
+// --- PARTE 5: ESPEJO DE TEXTO ---
+const inputUsuario = document.getElementById("inputUsuario");
 const espejo = document.getElementById("espejo");
 
-input.addEventListener("keyup", function() { 
-    espejo.textContent = input.value; 
+inputUsuario.addEventListener("keyup", function() {
+    espejo.textContent = inputUsuario.value; // Refleja texto en tiempo real [cite: 59]
 });
-let contador = 0; [cite: 68]
+
+// --- MINI PROYECTO: CONTADOR ---
+let contador = 0; // Variable de estado [cite: 68]
 const txtNumero = document.getElementById("numero");
 const btnAumentar = document.getElementById("aumentar");
 const btnDisminuir = document.getElementById("disminuir");
 
-// Función para actualizar el DOM y el color (Bonus) [cite: 71, 72]
 function actualizarPantalla() {
-    txtNumero.textContent = contador; 
+    txtNumero.textContent = contador; // Actualiza el DOM [cite: 71]
     
+    // Bonus de colores [cite: 72]
     if (contador > 0) {
-        txtNumero.style.color = "green"; 
+        txtNumero.style.color = "green";
     } else if (contador < 0) {
-        txtNumero.style.color = "red"; 
+        txtNumero.style.color = "red";
     } else {
-        txtNumero.style.color = "black"; 
+        txtNumero.style.color = "black";
     }
 }
 
 btnAumentar.addEventListener("click", () => {
-    contador++; 
+    contador++; // Incrementa [cite: 69]
     actualizarPantalla();
 });
 
 btnDisminuir.addEventListener("click", () => {
-    contador--; 
+    contador--; // Decrementa [cite: 70]
     actualizarPantalla();
 });
