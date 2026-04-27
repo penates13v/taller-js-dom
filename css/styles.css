@@ -1,94 +1,65 @@
-:root {
-    --poke-blue: #3B4CCA;
-    --poke-yellow: #FFDE00;
-    --poke-red: #CC0000;
-    --bg-light: #f0f0f0;
-}
-
+/* Estilos generales */
 body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    background-color: var(--bg-light);
-    color: #333;
-}
-
-header {
-    background-color: var(--poke-red);
-    color: white;
-    padding: 2rem;
-    text-align: center;
-    border-bottom: 5px solid var(--poke-blue);
-}
-
-.controls {
+    font-family: Arial, sans-serif;
     display: flex;
-    justify-content: center;
-    padding: 30px;
-    gap: 10px;
-    flex-wrap: wrap; /* Responsive básico */
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background-color: #f4f4f9;
 }
 
+/* Estilos para el Título y Descripción (Ejercicio 1) */
+#titulo {
+    transition: all 0.3s ease; /* Para que el cambio de color sea suave */
+}
+
+.descripcion {
+    color: #555;
+    font-style: italic;
+}
+
+/* Estilos para el Input y Espejo (Ejercicio 4) */
 input {
-    padding: 12px;
-    border-radius: 25px;
-    border: 2px solid var(--poke-blue);
+    padding: 10px;
+    margin-top: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
     width: 250px;
-    outline: none;
+}
+
+#espejo {
+    font-weight: bold;
+    color: #007bff;
+    min-height: 20px;
+}
+
+/* Estilos para el Contador (Mini Proyecto) */
+#numero {
+    font-size: 3rem;
+    margin: 10px 0;
+    font-weight: bold;
 }
 
 button {
-    padding: 12px 25px;
-    background-color: var(--poke-yellow);
-    color: var(--poke-blue);
-    border: 2px solid var(--poke-blue);
-    border-radius: 25px;
-    font-weight: bold;
+    padding: 10px 20px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: 0.3s; /* Efecto hover */
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    margin: 5px;
+    transition: background 0.2s;
 }
 
 button:hover {
-    background-color: var(--poke-blue);
-    color: white;
+    background-color: #555;
 }
 
-#resultados {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Grid responsive */
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+#aumentar {
+    background-color: #28a745;
 }
 
-.card {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-10px);
-}
-
-.card img {
-    width: 150px;
-    height: 150px;
-}
-
-.card h3 {
-    text-transform: capitalize;
-    color: var(--poke-blue);
-}
-
-.tipo {
-    display: inline-block;
-    padding: 5px 15px;
-    border-radius: 20px;
-    background: #e0e0e0;
-    font-size: 0.8rem;
-    font-weight: bold;
+#disminuir {
+    background-color: #dc3545;
 }
