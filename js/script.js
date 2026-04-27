@@ -1,51 +1,62 @@
-// --- PARTE 2: SELECCIÓN ---
-const titulo = document.getElementById("titulo");
-const descripcion = document.querySelector(".descripcion");
-console.log(titulo, descripcion); // Verificación en consola [cite: 34]
+const btnCargar = document.getElementById('btnCargar');
+const contenedor = document.getElementById('resultados');
+const inputBusqueda = document.getElementById('inputBusqueda');
 
-// --- PARTE 3 Y 4: MODIFICAR TÍTULO ---
-const btnModificar = document.getElementById("btnModificar");
-
-btnModificar.addEventListener("click", function() {
-    titulo.textContent = "¡Título Actualizado!"; // Cambia texto [cite: 39]
-    titulo.style.color = "blue";                 // Cambia color [cite: 45]
-    titulo.style.fontSize = "30px";             // Cambia tamaño [cite: 46]
-    titulo.style.backgroundColor = "yellow";     // Cambia fondo [cite: 47]
-});
-
-// --- PARTE 5: ESPEJO DE TEXTO ---
-const inputUsuario = document.getElementById("inputUsuario");
-const espejo = document.getElementById("espejo");
-
-inputUsuario.addEventListener("keyup", function() {
-    espejo.textContent = inputUsuario.value; // Refleja texto en tiempo real [cite: 59]
-});
-
-// --- MINI PROYECTO: CONTADOR ---
-let contador = 0; // Variable de estado [cite: 68]
-const txtNumero = document.getElementById("numero");
-const btnAumentar = document.getElementById("aumentar");
-const btnDisminuir = document.getElementById("disminuir");
-
-function actualizarPantalla() {
-    txtNumero.textContent = contador; // Actualiza el DOM [cite: 71]
+async function buscarPokemon() {
+    const nombre = inputBusqueda.value.toLowerCase().trim();
     
-    // Bonus de colores [cite: 72]
-    if (contador > 0) {
-        txtNumero.style.color = "green";
-    } else if (contador < 0) {
-        txtNumero.style.color = "red";
+    // Estado de carga
+    contenedor.innerHTML = '<p class="mensaje">Buscando en la hierba alta...</p>';
+
+    // La URL cambia según si el usuario escribe algo o no
+    let url = 'https://pokeapi.co/api/v2/pokemon/';
+    if (nombre) {
+        url = `https://pokeapi.co/api/v2/pokemon/${nombre}`;
     } else {
-        txtNumero.style.color = "black";
+        // Si no hay nombre, traemos los primeros 12 por defecto
+        url = 'https://pokeapi.co/api/v2/pokemon?limit=12';
+    }
+
+    try {
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            throw new Error('¡Ese Pokémon no fue encontrado!');
+        }
+
+        const data = await response.json();
+        contenedor.innerHTML = ''; // Limpiar contenedor antes de cargar
+
+        // La PokeAPI devuelve datos diferentes si es un solo pokemon o una lista
+        if (nombre) {
+            crearTarjeta(data);
+        } else {
+            // Si es una lista, necesitamos obtener el detalle de cada uno
+            for (let p of data.results) {
+                const resIndividual = await fetch(p.url);
+                const dataIndividual = await resIndividual.json();
+                crearTarjeta(dataIndividual);
+            }
+        }
+
+    } catch (error) {
+        contenedor.innerHTML = `<p class="mensaje-error">⚠️ Error: ${error.message}</p>`;
     }
 }
 
-btnAumentar.addEventListener("click", () => {
-    contador++; // Incrementa [cite: 69]
-    actualizarPantalla();
-});
+function crearTarjeta(pokemon) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    
+    // Usamos Template Literals para insertar los datos (Nombre, Imagen, Tipo)
+    card.innerHTML = `
+        <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+        <h3>${pokemon.name}</h3>
+        <p><strong>ID:</strong> #${pokemon.id}</p>
+        <span class="tipo">${pokemon.types[0].type.name}</span>
+    `;
+    
+    contenedor.appendChild(card);
+}
 
-btnDisminuir.addEventListener("click", () => {
-    contador--; // Decrementa [cite: 70]
-    actualizarPantalla();
-});
+btnCargar.addEventListener('click', buscarPokemon);
